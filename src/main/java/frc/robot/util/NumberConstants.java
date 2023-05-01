@@ -16,8 +16,8 @@ public class NumberConstants {
 
     // region Encoder Values
     public static final double NEO_ENCODER_TPR = 42;
-    public static final double DRIVE_GEAR_RATIO = 10.71;
-    public static final double WHEELDIAMETER = 6.2;
+    public static final double DRIVE_GEAR_RATIO = 4.225;
+    public static final double WHEELDIAMETER = 6;
     // endregion
 
     // region Measruements
@@ -28,5 +28,8 @@ public class NumberConstants {
     // robot
     public static final double ROBOT_WIDTH = 25;
     // endregion
+
+    public static final double kMaxSpeedMetersPerSecond = 0;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
 
 }
