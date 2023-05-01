@@ -13,6 +13,16 @@ public class NumberConstants {
 
     public static final double Ram_b = 2.0;
     public static final double Ram_zeta = 0.7;
+    // endregion
+
+    // region Robot Speeds
+    public static final double DRIVE_MAX_POWER = 1;
+    public static final double DRIVE_TELEOP_MAX_POWER = 0.5;
+    public static final double DRIVE_BOOST_POWER = 0.95;
+
+    public static final double kMaxSpeedMetersPerSecond = 0;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+    // endregion
 
     // region Encoder Values
     public static final double NEO_ENCODER_TPR = 42;
@@ -28,8 +38,5 @@ public class NumberConstants {
     // robot
     public static final double ROBOT_WIDTH = 25;
     // endregion
-
-    public static final double kMaxSpeedMetersPerSecond = 0;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
 
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.loops.DriveLoop;
 import frc.robot.loops.DriveLoop.DriveStates;
 import frc.robot.util.NumberConstants;
+import frc.robot.util.Trajectories;
 
 public class FollowPath extends SequentialCommandGroup {
   private DriveLoop driveLoop;
@@ -23,6 +24,7 @@ public class FollowPath extends SequentialCommandGroup {
     addCommands(
         // set state
         new InstantCommand(() -> driveLoop.setState(DriveStates.PATH_FOLLOWING)),
+        new InstantCommand(() -> driveLoop.resetOdometry(Trajectories.testTraj.getInitialPose())),
 
         // follow path
         new RamseteCommand(path,

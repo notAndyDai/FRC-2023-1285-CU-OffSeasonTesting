@@ -47,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
 
   protected DifferentialDriveKinematics kinematics;
   protected DifferentialDriveOdometry odometry;
-  protected Pose2d pose;
+  protected Pose2d robotPose;
 
   private SimpleMotorFeedforward feedforward;
   private PIDController leftPID;
@@ -95,7 +95,7 @@ public class DriveTrain extends SubsystemBase {
     // thing
     kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(NumberConstants.ROBOT_WIDTH));
     odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
-    pose = new Pose2d();
+    robotPose = new Pose2d();
 
     // feedforward
     feedforward = new SimpleMotorFeedforward(NumberConstants.driveKs, NumberConstants.driveKv, NumberConstants.driveKa);
@@ -112,6 +112,11 @@ public class DriveTrain extends SubsystemBase {
 
   public Pose2d getDrivePose() {
     return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(getHeading(), getLeftDistance(), getRightDistance(), pose);
   }
 
   // ******************* Encoders ********************
@@ -139,6 +144,11 @@ public class DriveTrain extends SubsystemBase {
             * Units.inchesToMeters(NumberConstants.WHEELDIAMETER) / 60,
         rightMainEncoder.getVelocity() / NumberConstants.DRIVE_GEAR_RATIO * 2 * Math.PI
             * Units.inchesToMeters(NumberConstants.WHEELDIAMETER) / 60);
+  }
+
+  public void resetEncoders() {
+    rightMainEncoder.setPosition(0);
+    leftMainEncoder.setPosition(0);
   }
 
   // ******************* Kinematics ********************
@@ -176,6 +186,20 @@ public class DriveTrain extends SubsystemBase {
     leftMain.setIdleMode(IdleMode.kCoast);
     leftFollowBack.setIdleMode(IdleMode.kCoast);
     leftFollowFront.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setDrive() {
+    rightMain.setIdleMode(IdleMode.kBrake);
+    rightFollowBack.setIdleMode(IdleMode.kCoast);
+    rightFollowFront.setIdleMode(IdleMode.kCoast);
+    leftMain.setIdleMode(IdleMode.kBrake);
+    leftFollowBack.setIdleMode(IdleMode.kCoast);
+    leftFollowFront.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setPower(double left, double right) {
+    leftMotors.set(left);
+    rightMotors.set(right);
   }
 
   public void stopPower() {

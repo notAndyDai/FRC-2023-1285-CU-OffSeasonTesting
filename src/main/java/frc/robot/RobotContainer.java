@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.loops.DriveLoop;
+import frc.robot.loops.DriveLoop.DriveStates;
 
 public class RobotContainer {
   private DriveLoop driveLoop;
@@ -18,6 +19,11 @@ public class RobotContainer {
 
   public void setAuto() {
     driveLoop.setBrake();
+  }
+
+  public void setTeleop() {
+    driveLoop.setDrive();
+    driveLoop.setState(DriveStates.TELEOP);
   }
 
   public void setDisabled() {
