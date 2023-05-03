@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -18,6 +19,7 @@ public class RobotContainer {
   }
 
   public void setAuto() {
+    driveLoop.resetOdometry(new Pose2d());
     driveLoop.setBrake();
   }
 
@@ -27,6 +29,8 @@ public class RobotContainer {
   }
 
   public void setDisabled() {
+    driveLoop.resetGyro();
+    driveLoop.resetEncoders();
     driveLoop.setCoast();
     driveLoop.stopPower();
   }

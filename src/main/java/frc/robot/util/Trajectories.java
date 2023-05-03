@@ -12,25 +12,25 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import frc.robot.loops.DriveLoop;
 
 public class Trajectories {
-    private static DriveLoop driveLoop = DriveLoop.getInstance();
+        private static DriveLoop driveLoop = DriveLoop.getInstance();
 
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    private static DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-            driveLoop.getFeedForward(),
-            driveLoop.getKinematics(),
-            10);
+        // Create a voltage constraint to ensure we don't accelerate too fast
+        private static DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+                        driveLoop.getFeedForward(),
+                        driveLoop.getKinematics(),
+                        10);
 
-    // Create config for trajectory
-    private static TrajectoryConfig config = new TrajectoryConfig(
-            NumberConstants.kMaxSpeedMetersPerSecond,
-            NumberConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(driveLoop.getKinematics())
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+        // Create config for trajectory
+        private static TrajectoryConfig config = new TrajectoryConfig(
+                        NumberConstants.kMaxSpeedMetersPerSecond,
+                        NumberConstants.kMaxAccelerationMetersPerSecondSquared)
+                        // Add kinematics to ensure max speed is actually obeyed
+                        .setKinematics(driveLoop.getKinematics())
+                        // Apply the voltage constraint
+                        .addConstraint(autoVoltageConstraint);
 
-    public static final Trajectory testTraj = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)), List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, new Rotation2d(0)), config);
+        public static final Trajectory testTraj = TrajectoryGenerator.generateTrajectory(
+                        new Pose2d(0, 0, new Rotation2d(0)), List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+                        new Pose2d(3, 0, new Rotation2d(0)), config);
 
 }

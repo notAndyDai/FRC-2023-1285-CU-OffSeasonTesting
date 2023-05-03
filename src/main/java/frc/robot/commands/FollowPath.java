@@ -24,7 +24,7 @@ public class FollowPath extends SequentialCommandGroup {
     addCommands(
         // set state
         new InstantCommand(() -> driveLoop.setState(DriveStates.PATH_FOLLOWING)),
-        new InstantCommand(() -> driveLoop.resetOdometry(Trajectories.testTraj.getInitialPose())),
+        new InstantCommand(() -> driveLoop.resetOdometry(path.getInitialPose())),
 
         // follow path
         new RamseteCommand(path,

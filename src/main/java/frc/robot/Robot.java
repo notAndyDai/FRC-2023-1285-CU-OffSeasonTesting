@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.FollowPath;
+import frc.robot.util.Telemetry;
 import frc.robot.util.Trajectories;
 
 /**
@@ -32,16 +34,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Telemetry.init();
     m_robotContainer = new RobotContainer();
 
     SmartDashboard.putData("Auto choices", m_chooser);
     m_chooser.addOption("Follow Path", new FollowPath(Trajectories.testTraj));
+    m_chooser.addOption("Null", null);
 
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    Telemetry.update();
+    Telemetry.updateDashBoard();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

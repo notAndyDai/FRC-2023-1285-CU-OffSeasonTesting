@@ -18,6 +18,8 @@ public class Telemetry {
 
     public static void updateDashBoard() {
         SmartDashboard.putString("Drive Loop State", String.valueOf(driveLoop.getState()));
+        SmartDashboard.putNumber("Left Encoder", driveLoop.getLeftDistance());
+        SmartDashboard.putNumber("Right Encoder", driveLoop.getRightDistance());
     }
 
 }

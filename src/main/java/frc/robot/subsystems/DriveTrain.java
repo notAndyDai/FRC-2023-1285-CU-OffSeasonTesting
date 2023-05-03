@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -88,6 +89,8 @@ public class DriveTrain extends SubsystemBase {
     rightFollowFrontEncoder = rightFollowFront.getEncoder();
     rightFollowBackEncoder = rightFollowBack.getEncoder();
 
+    gyro = new AHRS(SPI.Port.kMXP);
+
     // motor groups
     leftMotors = new MotorControllerGroup(leftMain, leftFollowBack, leftFollowFront);
     rightMotors = new MotorControllerGroup(rightMain, rightFollowBack, rightFollowFront);
@@ -129,13 +132,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftDistance() {
-    return (getLeftEncoderValue() * Math.PI * NumberConstants.WHEELDIAMETER)
-        / (NumberConstants.NEO_ENCODER_TPR * NumberConstants.DRIVE_GEAR_RATIO);
+    return (getLeftEncoderValue() * Math.PI * NumberConstants.WHEELDIAMETER * NumberConstants.DRIVE_GEAR_RATIO)
+        / (NumberConstants.NEO_ENCODER_TPR);
   }
 
   public double getRightDistance() {
-    return (getRightEncoderValue() * Math.PI * NumberConstants.WHEELDIAMETER)
-        / (NumberConstants.NEO_ENCODER_TPR * NumberConstants.DRIVE_GEAR_RATIO);
+    return (getRightEncoderValue() * Math.PI * NumberConstants.WHEELDIAMETER * NumberConstants.DRIVE_GEAR_RATIO)
+        / (NumberConstants.NEO_ENCODER_TPR);
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -149,6 +152,10 @@ public class DriveTrain extends SubsystemBase {
   public void resetEncoders() {
     rightMainEncoder.setPosition(0);
     leftMainEncoder.setPosition(0);
+  }
+
+  public void resetGyro() {
+    gyro.reset();
   }
 
   // ******************* Kinematics ********************
